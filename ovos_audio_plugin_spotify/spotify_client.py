@@ -3,6 +3,9 @@ import time
 
 import requests
 import spotipy
+
+from functools import wraps
+
 from ovos_backend_client.api import OAuthApi, DeviceApi
 from ovos_utils import flatten_list
 from ovos_utils.log import LOG
@@ -26,6 +29,7 @@ class PlaylistNotFoundError(Exception):
 class SpotifyNotAuthorizedError(Exception):
     pass
 
+OAUTH_TOKEN_ID = "audioplugin_spotify"
 
 class OVOSSpotifyCredentials(SpotifyAuthBase):
     """ Oauth through ovos-backend-client"""
@@ -42,7 +46,7 @@ class OVOSSpotifyCredentials(SpotifyAuthBase):
         retry = False
         d = None
         try:
-            d = OAuthApi().get_oauth_token("spotify")
+            d = OAuthApi().get_oauth_token(OAUTH_TOKEN_ID)
         except HTTPError as e:
             if e.response.status_code == 404:  # Token doesn't exist
                 raise SpotifyNotAuthorizedError
@@ -51,7 +55,7 @@ class OVOSSpotifyCredentials(SpotifyAuthBase):
             else:
                 retry = True
         if retry:
-            d = OAuthApi().get_oauth_token("spotify")
+            d = OAuthApi().get_oauth_token(OAUTH_TOKEN_ID)
         if not d:
             raise SpotifyNotAuthorizedError
         return d
@@ -66,6 +70,7 @@ class OVOSSpotifyCredentials(SpotifyAuthBase):
 
 
 def refresh_spotify_oauth(func):
+    @wraps(func)
     def wrapper(self, *args, **kwargs):
         try:
             return func(self, *args, **kwargs)
