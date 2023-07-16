@@ -42,7 +42,7 @@ class OVOSSpotifyCredentials(SpotifyAuthBase):
         retry = False
         d = None
         try:
-            d = OAuthApi().get_oauth_token("spotify")
+            d = OAuthApi().get_oauth_token("spotify_spotify")
         except HTTPError as e:
             if e.response.status_code == 404:  # Token doesn't exist
                 raise SpotifyNotAuthorizedError
