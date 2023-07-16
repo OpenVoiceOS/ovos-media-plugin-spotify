@@ -3,6 +3,9 @@ import time
 
 import requests
 import spotipy
+
+from functools import wraps
+
 from ovos_backend_client.api import OAuthApi, DeviceApi
 from ovos_utils import flatten_list
 from ovos_utils.log import LOG
@@ -67,6 +70,7 @@ class OVOSSpotifyCredentials(SpotifyAuthBase):
 
 
 def refresh_spotify_oauth(func):
+    @wraps(func)
     def wrapper(self, *args, **kwargs):
         try:
             return func(self, *args, **kwargs)
