@@ -2,7 +2,16 @@
 
 ## [Unreleased](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/compare/e87b1f36866c7960947d16e89094c4fc30811f46...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/compare/V0.0.0a2...HEAD)
+
+**Merged pull requests:**
+
+- Update github action dependencies [\#3](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/pull/3) ([forslund](https://github.com/forslund))
+- Change Oauth token identifier [\#2](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/pull/2) ([forslund](https://github.com/forslund))
+
+## [V0.0.0a2](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/tree/V0.0.0a2) (2023-06-12)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/compare/e87b1f36866c7960947d16e89094c4fc30811f46...V0.0.0a2)
 
 **Merged pull requests:**
 
