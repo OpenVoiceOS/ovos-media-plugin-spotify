@@ -2,7 +2,16 @@
 
 ## [Unreleased](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/compare/V0.0.0a2...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/compare/V0.0.0a3...HEAD)
+
+**Merged pull requests:**
+
+- Extract device list from response [\#6](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/pull/6) ([forslund](https://github.com/forslund))
+- Warn if not configured [\#4](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/pull/4) ([forslund](https://github.com/forslund))
+
+## [V0.0.0a3](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/tree/V0.0.0a3) (2023-07-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/compare/V0.0.0a2...V0.0.0a3)
 
 **Merged pull requests:**
 
