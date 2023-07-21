@@ -151,7 +151,8 @@ class SpotifyConnect(spotipy.Spotify):
             list of spotify devices connected to the user.
         """
         # TODO: Cache for a brief time
-        return self.devices()
+        devices = self.devices()
+        return devices.get('devices', [])
 
     def get_device(self, dev_id):
         for d in self.get_devices():
