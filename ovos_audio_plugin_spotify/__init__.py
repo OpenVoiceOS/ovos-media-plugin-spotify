@@ -99,7 +99,9 @@ class SpotifyAudioService(AudioBackend):
 def load_service(base_config, bus):
     backends = base_config.get('backends', [])
     services = [(b, backends[b]) for b in backends
-                if backends[b]['type'] == 'spotify' and
+                if backends[b].get('type') == 'spotify' and
                 backends[b].get('active', True)]
     instances = [SpotifyAudioService(s[1], bus, s[0]) for s in services]
+    if len(instances) == 0:
+        LOG.warning("No Spotify backends have been configured")
     return instances
