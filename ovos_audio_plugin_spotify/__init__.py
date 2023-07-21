@@ -52,6 +52,7 @@ class SpotifyAudioService(AudioBackend):
         # once playback is started calling this will have no effect
 
     def add_list(self, tracks):
+        tracks = [t.replace("spotify://", "") for t in tracks]
         self.tracks += tracks
         LOG.info("Track list is " + str(tracks))
 
