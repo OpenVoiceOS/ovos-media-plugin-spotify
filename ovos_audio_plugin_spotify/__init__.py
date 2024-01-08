@@ -70,7 +70,3 @@ class SpotifyOCPAudioService(AudioPlayerBackend):
     def track_info(self):
         """ Extract info of current track. """
         return self.spotify.track_info()
-
-    def track_start(self, data, other):
-        if self._track_start_callback:
-            self._track_start_callback(self.track_info()['name'])
