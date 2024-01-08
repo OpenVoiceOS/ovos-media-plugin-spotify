@@ -1,17 +1,16 @@
 import re
 import time
+from functools import wraps
 
 import requests
 import spotipy
+from ovos_backend_client.api import OAuthApi
+from requests.exceptions import HTTPError
+from spotipy.oauth2 import SpotifyAuthBase
 
-from functools import wraps
-
-from ovos_backend_client.api import OAuthApi, DeviceApi
 from ovos_utils import flatten_list
 from ovos_utils.log import LOG
 from ovos_utils.parse import match_one, fuzzy_match
-from requests.exceptions import HTTPError
-from spotipy.oauth2 import SpotifyAuthBase
 
 
 class SpotifyPlaybackError(Exception):
@@ -29,7 +28,9 @@ class PlaylistNotFoundError(Exception):
 class SpotifyNotAuthorizedError(Exception):
     pass
 
+
 OAUTH_TOKEN_ID = "audioplugin_spotify"
+
 
 class OVOSSpotifyCredentials(SpotifyAuthBase):
     """ Oauth through ovos-backend-client"""
@@ -794,4 +795,3 @@ class SpotifyClient:
         ret['artists'] = artist
         ret['name'] = track
         return ret
-

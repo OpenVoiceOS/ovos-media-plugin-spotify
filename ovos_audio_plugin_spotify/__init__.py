@@ -1,20 +1,16 @@
-from ovos_utils.log import LOG
 from ovos_audio_plugin_spotify.spotify_client import SpotifyClient
-from ovos_plugin_manager.templates.audio import AudioBackend
 from ovos_backend_client.api import DeviceApi
 
+from ovos_plugin_manager.templates.media import AudioPlayerBackend
 
-class SpotifyAudioService(AudioBackend):
+
+class SpotifyOCPAudioService(AudioPlayerBackend):
     """
         Spotify Audio backend
     """
 
-    def __init__(self, config, bus, name='spotify'):
+    def __init__(self, config, bus):
         super().__init__(config, bus)
-        self.config = config
-        self.bus = bus
-        self.name = name
-        self.tracks = []
         self.spotify = SpotifyClient()
         self._paused = False
 
@@ -45,20 +41,9 @@ class SpotifyAudioService(AudioBackend):
     def supported_uris(self):
         return ['spotify']
 
-    def clear_list(self):
-        self.tracks = []
-        # TODO remove from spotify queue
-        # Not available https://github.com/spotify/web-api/issues/462
-        # once playback is started calling this will have no effect
-
-    def add_list(self, tracks):
-        tracks = [t.replace("spotify://", "") for t in tracks]
-        self.tracks += tracks
-        LOG.info("Track list is " + str(tracks))
-
     def play(self, repeat=False):
         # TODO handle choose device (config / utterance ?)
-        self.spotify.play(self.tracks, dev_id=self.device, repeat=repeat)
+        self.spotify.play([self._now_playing], dev_id=self.device, repeat=repeat)
 
     def stop(self):
         # there is no hard stop method
@@ -73,12 +58,6 @@ class SpotifyAudioService(AudioBackend):
         if self._paused:
             self._paused = False
             self.spotify.resume(self.device)
-
-    def next(self):
-        self.spotify.next(self.device)
-
-    def previous(self):
-        self.spotify.previous(self.device)
 
     def lower_volume(self):
         if self.spotify.is_playing(self.device):
@@ -95,14 +74,3 @@ class SpotifyAudioService(AudioBackend):
     def track_start(self, data, other):
         if self._track_start_callback:
             self._track_start_callback(self.track_info()['name'])
-
-
-def load_service(base_config, bus):
-    backends = base_config.get('backends', [])
-    services = [(b, backends[b]) for b in backends
-                if backends[b].get('type') == 'spotify' and
-                backends[b].get('active', True)]
-    instances = [SpotifyAudioService(s[1], bus, s[0]) for s in services]
-    if len(instances) == 0:
-        LOG.warning("No Spotify backends have been configured")
-    return instances
