@@ -49,7 +49,7 @@ def required(requirements_file):
                 if pkg.strip() and not pkg.startswith("#")]
 
 
-PLUGIN_ENTRY_POINT = 'ovos-media-audio-plugin-spotify=ovos_audio:plugin_spotify.SpotifyOCPAudioService'
+PLUGIN_ENTRY_POINT = 'ovos-media-audio-plugin-spotify=ovos_audio:plugin_spotify:SpotifyOCPAudioService'
 
 setup(
     name='ovos-media-plugin-spotify',
