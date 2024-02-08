@@ -8,7 +8,7 @@ BASEDIR = os.path.abspath(os.path.dirname(__file__))
 def get_version():
     """ Find the version of the package"""
     version = None
-    version_file = os.path.join(BASEDIR, 'ovos_audio_plugin_spotify', 'version.py')
+    version_file = os.path.join(BASEDIR, 'ovos_media_plugin_spotify', 'version.py')
     major, minor, build, alpha = (None, None, None, None)
     with open(version_file) as f:
         for line in f:
@@ -49,21 +49,23 @@ def required(requirements_file):
                 if pkg.strip() and not pkg.startswith("#")]
 
 
-PLUGIN_ENTRY_POINT = 'ovos_spotify=ovos_audio_plugin_spotify'
-PLUGIN_CONFIG_ENTRY_POINT = 'ovos_spotify.config=ovos_audio_plugin_spotify:spotifyAudioPluginConfig'
+PLUGIN_ENTRY_POINT = 'ovos-media-audio-plugin-spotify=ovos_media_plugin_spotify:SpotifyOCPAudioService'
 
 setup(
-    name='ovos-audio-plugin-spotify',
+    name='ovos-media-plugin-spotify',
     version=get_version(),
     description='spotify plugin for ovos',
-    url='https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify',
+    url='https://github.com/OpenVoiceOS/ovos-media-plugin-spotify',
     author='JarbasAi',
     author_email='jarbasai@mailfence.com',
     license='Apache-2.0',
-    packages=['ovos_audio_plugin_spotify'],
+    packages=['ovos_media_plugin_spotify'],
     install_requires=required("requirements/requirements.txt"),
-    package_data={'': package_files('ovos_audio_plugin_spotify')},
-    keywords='ovos audio plugin',
-    entry_points={'mycroft.plugin.audioservice': PLUGIN_ENTRY_POINT,
-                  'mycroft.plugin.audioservice.config': PLUGIN_CONFIG_ENTRY_POINT}
+    package_data={'': package_files('ovos_media_plugin_spotify')},
+    keywords='ovos audio video OCP plugin',
+    entry_points={'opm.media.audio': PLUGIN_ENTRY_POINT,
+                  'console_scripts': [
+                      'ovos-spotify-oauth=ovos_media_plugin_spotify.auth:main'
+                  ]
+                  }
 )

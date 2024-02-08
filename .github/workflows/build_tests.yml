@@ -7,7 +7,7 @@ on:
     branches:
       - dev
     paths-ignore:
-      - 'ovos_audio_plugin_spotify/version.py'
+      - 'ovos_media_plugin_spotify/version.py'
       - 'test/**'
       - 'examples/**'
       - '.github/**'
@@ -15,7 +15,7 @@ on:
       - 'LICENSE'
       - 'CHANGELOG.md'
       - 'MANIFEST.in'
-      - 'readme.md'
+      - 'README.md'
       - 'scripts/**'
   workflow_dispatch:
 
