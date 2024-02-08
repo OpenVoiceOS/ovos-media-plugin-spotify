@@ -29,7 +29,7 @@ class SpotifyNotAuthorizedError(Exception):
     pass
 
 
-OAUTH_TOKEN_ID = "audioplugin_spotify"
+OAUTH_TOKEN_ID = "ocp_spotify"
 
 
 class OVOSSpotifyCredentials(SpotifyAuthBase):
