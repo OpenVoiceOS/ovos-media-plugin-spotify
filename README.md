@@ -1,40 +1,61 @@
+# ovos-media-plugin-spotify
 
+spotify plugin for [ovos-media](https://github.com/OpenVoiceOS/ovos-media)
 
-# WIP WIP WIP WIP WIP it's spotify for the OpenVoiceOS ecosystem
+allows OVOS to initiate playback on spotify 
 
+NOTE: [the companion skill](https://github.com/OpenVoiceOS/skill-ovos-spotify) is needed to integrate with voice search
 
-# Setup
+## Install
 
+`pip install ovos-media-plugin-spotify`
 
-wait for this plugin and companion skill to be ready
+## Oauth
 
-```python
+Currently Oauth needs to be performed manually
 
-# TODO companion skill
-s = SpotifyClient()
-# pprint(s.query_album("hail and kill by manowar")[1])
+after installing the plugin run `ovos-spotify-oauth` on the command line and follow the instructions
 
-from ovos_utils.skills.audioservice import ClassicAudioServiceInterface
-from ovos_utils.messagebus import FakeBus
+```
+$ ovos-spotify-oauth
+This script creates the token information needed for running spotify
+        with a set of personal developer credentials.
 
-bus = FakeBus()
-audio = ClassicAudioServiceInterface(bus)
+        It requires the user to go to developer.spotify.com and set up a
+        developer account, create an "Application" and make sure to whitelist
+        "https://localhost:8888".
 
-audio.play("spotify:playlist:37i9dQZF1DX08jcQJXDnEQ")
-audio.play(["spotify:track:5P2Ghhv0wFYThHfDQaS0g5",
-            "spotify:playlist:37i9dQZF1DX08jcQJXDnEQ"])
-time.sleep(5)
-audio.pause()
-time.sleep(5)
+        After you have done that enter the information when prompted and follow
+        the instructions given.
+        
+YOUR CLIENT ID: xxxxx
+YOUR CLIENT SECRET: xxxxx
+Go to the following URL: https://accounts.spotify.com/authorize?client_id=xxx&response_type=code&redirect_uri=https%3A%2F%2Flocalhost%3A8888&scope=user-library-read+streaming+playlist-read-private+user-top-read+user-read-playback-state
+Enter the URL you were redirected to: https://localhost:8888/?code=.....
+ocp_spotify oauth token saved
+```
 
-audio.resume()
-time.sleep(5)
+## Configuration
 
-audio.next()
-time.sleep(5)
+edit your mycroft.conf with any spotify players you want to expose
 
-audio.prev()
-time.sleep(5)
+```javascript
+{
+ "media": {
+    "audio_players": {
+        "kitchen_chromecast": {
+            "module": "ovos-media-audio-plugin-spotify",
+            
+            // this needs to be the name of the device on spotify!
+            "identifier": "Mark2",
 
-print(audio.track_info())
+            // users may request specific handlers in the utterance
+            // using these aliases
+             "aliases": ["office spotify", "office", "desk", "workstation"],
+
+            // deactivate a plugin by setting to false
+            "active": true
+        }
+    }
+}
 ```
