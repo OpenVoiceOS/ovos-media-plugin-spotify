@@ -43,7 +43,7 @@ edit your mycroft.conf with any spotify players you want to expose
 {
  "media": {
     "audio_players": {
-        "kitchen_chromecast": {
+        "desk_speaker": {
             "module": "ovos-media-audio-plugin-spotify",
             
             // this needs to be the name of the device on spotify!
