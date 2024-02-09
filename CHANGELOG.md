@@ -1,38 +1,47 @@
 # Changelog
 
-## [Unreleased](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/tree/HEAD)
+## [Unreleased](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/compare/V0.0.0a4...HEAD)
-
-**Merged pull requests:**
-
-- Extract device list from response [\#6](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/pull/6) ([forslund](https://github.com/forslund))
-- Unwrap Spotify uri [\#5](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/pull/5) ([forslund](https://github.com/forslund))
-
-## [V0.0.0a4](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/tree/V0.0.0a4) (2023-07-21)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/compare/V0.0.0a3...V0.0.0a4)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/V0.0.0a5...HEAD)
 
 **Merged pull requests:**
 
-- Warn if not configured [\#4](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/pull/4) ([forslund](https://github.com/forslund))
+- feat/refresh\_oauth\_token [\#9](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/9) ([NeonJarbas](https://github.com/NeonJarbas))
+- latest OCP [\#8](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/8) ([NeonJarbas](https://github.com/NeonJarbas))
 
-## [V0.0.0a3](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/tree/V0.0.0a3) (2023-07-16)
+## [V0.0.0a5](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/V0.0.0a5) (2023-07-21)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/compare/V0.0.0a2...V0.0.0a3)
-
-**Merged pull requests:**
-
-- Update github action dependencies [\#3](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/pull/3) ([forslund](https://github.com/forslund))
-- Change Oauth token identifier [\#2](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/pull/2) ([forslund](https://github.com/forslund))
-
-## [V0.0.0a2](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/tree/V0.0.0a2) (2023-06-12)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/compare/e87b1f36866c7960947d16e89094c4fc30811f46...V0.0.0a2)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/V0.0.0a4...V0.0.0a5)
 
 **Merged pull requests:**
 
-- Fix pip install [\#1](https://github.com/OpenVoiceOS/ovos-audio-plugin-spotify/pull/1) ([forslund](https://github.com/forslund))
+- Extract device list from response [\#6](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/6) ([forslund](https://github.com/forslund))
+- Unwrap Spotify uri [\#5](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/5) ([forslund](https://github.com/forslund))
+
+## [V0.0.0a4](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/V0.0.0a4) (2023-07-21)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/V0.0.0a3...V0.0.0a4)
+
+**Merged pull requests:**
+
+- Warn if not configured [\#4](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/4) ([forslund](https://github.com/forslund))
+
+## [V0.0.0a3](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/V0.0.0a3) (2023-07-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/V0.0.0a2...V0.0.0a3)
+
+**Merged pull requests:**
+
+- Update github action dependencies [\#3](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/3) ([forslund](https://github.com/forslund))
+- Change Oauth token identifier [\#2](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/2) ([forslund](https://github.com/forslund))
+
+## [V0.0.0a2](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/V0.0.0a2) (2023-06-12)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/e87b1f36866c7960947d16e89094c4fc30811f46...V0.0.0a2)
+
+**Merged pull requests:**
+
+- Fix pip install [\#1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/1) ([forslund](https://github.com/forslund))
 
 
 
