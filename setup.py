@@ -50,6 +50,7 @@ def required(requirements_file):
 
 
 PLUGIN_ENTRY_POINT = 'ovos-media-audio-plugin-spotify=ovos_media_plugin_spotify:SpotifyOCPAudioService'
+OLD_PLUGIN_ENTRY_POINT = 'ovos_spotify=ovos_media_plugin_spotify.audio'
 
 setup(
     name='ovos-media-plugin-spotify',
@@ -64,6 +65,7 @@ setup(
     package_data={'': package_files('ovos_media_plugin_spotify')},
     keywords='ovos audio video OCP plugin',
     entry_points={'opm.media.audio': PLUGIN_ENTRY_POINT,
+                  'mycroft.plugin.audioservice': OLD_PLUGIN_ENTRY_POINT,
                   'console_scripts': [
                       'ovos-spotify-oauth=ovos_media_plugin_spotify.auth:main'
                   ]
