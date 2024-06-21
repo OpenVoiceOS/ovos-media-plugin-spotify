@@ -4,7 +4,7 @@ spotify plugin for [ovos-audio](https://github.com/OpenVoiceOS/ovos-audio) and [
 
 allows OVOS to initiate playback on spotify 
 
-NOTE: [the companion skill](https://github.com/OpenVoiceOS/skill-ovos-spotify) is needed to integrate with voice search
+> NOTE: [the companion skill](https://github.com/OpenVoiceOS/skill-ovos-spotify) is needed to integrate with voice search
 
 ## Install
 
@@ -38,6 +38,8 @@ ocp_spotify oauth token saved
 ## Configuration
 
 edit your mycroft.conf with any spotify players you want to expose
+
+> NOTE: If you want to make the OVOS device itself a spotify player, we recommend [spotifyd](https://github.com/Spotifyd/spotifyd).
 
 ### ovos-audio
 
