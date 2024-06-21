@@ -1,6 +1,6 @@
 # ovos-media-plugin-spotify
 
-spotify plugin for [ovos-media](https://github.com/OpenVoiceOS/ovos-media)
+spotify plugin for [ovos-audio](https://github.com/OpenVoiceOS/ovos-audio) and [ovos-media](https://github.com/OpenVoiceOS/ovos-media)
 
 allows OVOS to initiate playback on spotify 
 
@@ -39,6 +39,26 @@ ocp_spotify oauth token saved
 
 edit your mycroft.conf with any spotify players you want to expose
 
+### ovos-audio
+
+```javascript
+{
+  "Audio": {
+    "backends": {
+      "spotify": {
+        "type": "ovos_spotify",
+        "identifier": "device_name_in_spotify",
+        "active": true
+      }
+    }
+  }
+}
+```
+
+### ovos-media
+
+> **WARNING**: `ovos-media' has not yet been released, WIP
+
 ```javascript
 {
  "media": {
@@ -58,4 +78,37 @@ edit your mycroft.conf with any spotify players you want to expose
         }
     }
 }
+```
+
+## Python usage
+
+if you don't want to use [the companion skill](https://github.com/OpenVoiceOS/skill-ovos-spotify), you can also write your own integrations
+
+```python
+s = SpotifyClient()
+# pprint(s.query_album("hail and kill by manowar")[1])
+
+from ovos_utils.skills.audioservice import ClassicAudioServiceInterface
+from ovos_utils.messagebus import FakeBus
+
+bus = FakeBus()
+audio = ClassicAudioServiceInterface(bus)
+
+audio.play("spotify:playlist:37i9dQZF1DX08jcQJXDnEQ")
+audio.play(["spotify:track:5P2Ghhv0wFYThHfDQaS0g5",
+            "spotify:playlist:37i9dQZF1DX08jcQJXDnEQ"])
+time.sleep(5)
+audio.pause()
+time.sleep(5)
+
+audio.resume()
+time.sleep(5)
+
+audio.next()
+time.sleep(5)
+
+audio.prev()
+time.sleep(5)
+
+print(audio.track_info())
 ```
