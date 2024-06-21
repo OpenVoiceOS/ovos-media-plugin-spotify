@@ -41,6 +41,31 @@ edit your mycroft.conf with any spotify players you want to expose
 
 > NOTE: If you want to make the OVOS device itself a spotify player, we recommend [spotifyd](https://github.com/Spotifyd/spotifyd).
 
+The easiest way is to use the provided `ovos-spotifỹ-autoconfigure` command
+
+```bash
+This script will auto configure ALL spotify devices under your mycroft.conf
+        
+        SPOTIFY PREMIUM is required!
+        
+        If you have not yet authenticated your spotify account, run 'ovos-spotify-oauth' first!
+        
+Found device: OpenVoiceOS-TV
+
+mycroft.conf updated!
+
+# Legacy Audio Service:
+{'backends': {'spotify-OpenVoiceOS-TV': {'active': True,
+                                         'identifier': 'OpenVoiceOS-TV',
+                                         'type': 'ovos_spotify'}}}
+
+# ovos-media Service:
+{'audio_players': {'spotify-OpenVoiceOS-TV': {'active': True,
+                                              'aliases': ['OpenVoiceOS-TV'],
+                                              'identifier': 'OpenVoiceOS-TV',
+                                              'module': 'ovos-media-audio-plugin-spotify'}}}
+```
+
 ### ovos-audio
 
 ```javascript
@@ -73,7 +98,7 @@ edit your mycroft.conf with any spotify players you want to expose
 
             // users may request specific handlers in the utterance
             // using these aliases
-             "aliases": ["office spotify", "office", "desk", "workstation"],
+            "aliases": ["office spotify", "office", "desk", "workstation"],
 
             // deactivate a plugin by setting to false
             "active": true

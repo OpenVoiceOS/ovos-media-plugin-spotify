@@ -67,7 +67,8 @@ setup(
     entry_points={'opm.media.audio': PLUGIN_ENTRY_POINT,
                   'mycroft.plugin.audioservice': OLD_PLUGIN_ENTRY_POINT,
                   'console_scripts': [
-                      'ovos-spotify-oauth=ovos_media_plugin_spotify.auth:main'
+                      'ovos-spotify-oauth=ovos_media_plugin_spotify.auth:main',
+                      'ovos-spotify-autoconfigure=ovos_media_plugin_spotify.autoconfigure:main'
                   ]
                   }
 )
