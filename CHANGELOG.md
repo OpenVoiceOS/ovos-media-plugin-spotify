@@ -1,5 +1,9 @@
 # Changelog
 
+## [V0.1.0a4](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/V0.1.0a4) (2024-06-21)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/V0.1.0a3...V0.1.0a4)
+
 ## [V0.1.0a3](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/V0.1.0a3) (2024-06-21)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/V0.1.0a2...V0.1.0a3)
