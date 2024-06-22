@@ -41,9 +41,10 @@ edit your mycroft.conf with any spotify players you want to expose
 
 > NOTE: If you want to make the OVOS device itself a spotify player, we recommend [spotifyd](https://github.com/Spotifyd/spotifyd).
 
-The easiest way is to use the provided `ovos-spotifỹ-autoconfigure` command
+The easiest way is to use the provided `ovos-spotify-autoconfigure` command
 
 ```bash
+$ ovos-spotify-autoconfigure
 This script will auto configure ALL spotify devices under your mycroft.conf
         
         SPOTIFY PREMIUM is required!
