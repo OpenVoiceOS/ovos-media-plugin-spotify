@@ -36,7 +36,9 @@ class SpotifyAudioService(AudioBackend):
         self.ts = time.time()
         # Indicate to audio service which track is being played
         if self._track_start_callback:
-            self._track_start_callback(self._now_playing)
+            # TODO why is it None sometimes?
+            if self._now_playing:
+                self._track_start_callback(self._now_playing)
 
     def on_track_end(self):
         self._paused = False
@@ -52,7 +54,7 @@ class SpotifyAudioService(AudioBackend):
         self.on_track_start()
         try:
             self.spotify.play([self._now_playing],
-                              dev_id=self.device)
+                              dev_id=self.device_name)
             self._wait_until_finished()
         except:
             self.on_track_error()
@@ -68,31 +70,31 @@ class SpotifyAudioService(AudioBackend):
 
     def stop(self):
         # there is no hard stop method
-        self.spotify.pause(self.device)
+        self.spotify.pause(self.device_name)
         self.on_track_end()
 
     def pause(self):
-        if self.spotify.is_playing(self.device):
+        if self.spotify.is_playing(self.device_name):
             self._paused = True
-            self.spotify.pause(self.device)
+            self.spotify.pause(self.device_name)
 
     def resume(self):
         if self._paused:
             self._paused = False
-            self.spotify.resume(self.device)
+            self.spotify.resume(self.device_name)
 
     def next(self):
-        self.spotify.next(self.device)
+        self.spotify.next(self.device_name)
 
     def previous(self):
-        self.spotify.previous(self.device)
+        self.spotify.previous(self.device_name)
 
     def lower_volume(self):
-        if self.spotify.is_playing(self.device):
+        if self.spotify.is_playing(self.device_name):
             self.spotify.volume(int(self.spotify.DEFAULT_VOLUME / 3))
 
     def restore_volume(self):
-        if self.spotify.is_playing(self.device):
+        if self.spotify.is_playing(self.device_name):
             self.spotify.volume(int(self.spotify.DEFAULT_VOLUME))
 
     def track_info(self):
@@ -125,7 +127,7 @@ class SpotifyAudioService(AudioBackend):
 
 
 def load_service(base_config, bus):
-    backends = base_config.get('backends', [])
+    backends = base_config.get('backends', {})
     services = [(b, backends[b]) for b in backends
                 if backends[b].get('type') in ['spotify', 'ovos_spotify'] and
                 backends[b].get('active', True)]
