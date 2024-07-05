@@ -12,7 +12,7 @@ class SpotifyAudioService(AudioBackend):
     """
 
     def __init__(self, config, bus, name='spotify'):
-        super().__init__(config, bus)
+        super().__init__(config, bus, name)
         self.spotify = SpotifyClient()
         self._paused = False
         self.ts = 0
