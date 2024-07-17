@@ -70,8 +70,9 @@ class SpotifyAudioService(AudioBackend):
 
     def stop(self):
         # there is no hard stop method
-        self.spotify.pause(self.device_name)
-        self.on_track_end()
+        if not self._paused:
+            self.spotify.pause(self.device_name)
+            self.on_track_end()
 
     def pause(self):
         if self.spotify.is_playing(self.device_name):
