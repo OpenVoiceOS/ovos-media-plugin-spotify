@@ -1,0 +1,63 @@
+name: Release Alpha and Propose Stable
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [closed]
+    branches: [dev]
+
+jobs:
+  publish_alpha:
+    uses: TigreGotico/gh-automations/.github/workflows/publish-alpha.yml@master
+    with:
+      branch: 'dev'
+      version_file: 'ovos_media_plugin_spotify/version.py'
+      setup_py: 'setup.py'
+      update_changelog: true
+      publish_prerelease: true
+      changelog_max_issues: 100
+
+  propose_release:
+    needs: publish_alpha
+    if: success()  # Ensure this job only runs if the previous job succeeds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout dev branch
+        uses: actions/checkout@v3
+        with:
+          ref: dev
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Get version from setup.py
+        id: get_version
+        run: |
+          VERSION=$(python setup.py --version)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Create and push new branch
+        run: |
+          git checkout -b release-${{ env.VERSION }}
+          git push origin release-${{ env.VERSION }}
+
+      - name: Open Pull Request from dev to master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Variables
+          BRANCH_NAME="release-${{ env.VERSION }}"
+          BASE_BRANCH="master"
+          HEAD_BRANCH="release-${{ env.VERSION }}"
+          PR_TITLE="Release ${{ env.VERSION }}"
+          PR_BODY="Human review requested!"
+
+          # Create a PR using GitHub API
+          curl -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -d "{\"title\":\"$PR_TITLE\",\"body\":\"$PR_BODY\",\"head\":\"$HEAD_BRANCH\",\"base\":\"$BASE_BRANCH\"}" \
+            https://api.github.com/repos/${{ github.repository }}/pulls
+
