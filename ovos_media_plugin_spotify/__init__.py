@@ -4,6 +4,7 @@ from ovos_plugin_manager.templates.media import AudioPlayerBackend
 from ovos_utils.log import LOG
 
 from ovos_media_plugin_spotify.spotify_client import SpotifyClient
+from ovos_media_plugin_spotify.spotifyd import SpotifydHooks
 
 
 class SpotifyOCPAudioService(AudioPlayerBackend):
@@ -15,8 +16,12 @@ class SpotifyOCPAudioService(AudioPlayerBackend):
         super().__init__(config, bus)
         self.spotify = SpotifyClient()
         self._paused = False
-        self.ts = 0
+        self._last_sync_ts = 0
         self.device_name = self.config.get("identifier")  # device name in spotify
+        self.hooks = SpotifydHooks(bus=self.bus,
+                                   track_start_callback=self.on_track_start,
+                                   track_end_callback=self.on_track_end,
+                                   track_error_callback=self.on_track_error)
 
     @property
     def device(self):
@@ -32,24 +37,30 @@ class SpotifyOCPAudioService(AudioPlayerBackend):
             return []
         return ['spotify']
 
-    def on_track_start(self):
-        self.ts = time.time()
+    def on_track_start(self, uri: str = ""):
+        self._now_playing = uri or self._now_playing
+        self._last_sync_ts = time.time()
         # Indicate to audio service which track is being played
         if self._track_start_callback:
             self._track_start_callback(self._now_playing)
 
-    def on_track_end(self):
+    def on_track_end(self, uri: str = ""):
+        if not uri:
+            self.hooks.reset_metadata()
         self._paused = False
-        self.ts = 0
+        self._last_sync_ts = 0
         if self._track_start_callback:
             self._track_start_callback(None)
 
-    def on_track_error(self):
+    def on_track_error(self, uri: str = ""):
+        if not uri:
+            self.hooks.reset_metadata()
         self._paused = False
-        self.ts = 0
+        self._last_sync_ts = 0
         self.ocp_error()
 
     def play(self):
+        self.hooks.preload_uri(self._now_playing)
         self.on_track_start()
         try:
             self.spotify.play([self._now_playing],
@@ -60,7 +71,7 @@ class SpotifyOCPAudioService(AudioPlayerBackend):
 
     def _wait_until_finished(self):
         # pool spotify to see when the player becomes inactive
-        while self.ts > 0:
+        while self._last_sync_ts > 0:
             time.sleep(2)
             for d in self.spotify.devices:
                 if d["name"] == self.device_name and not d["is_active"]:
@@ -98,17 +109,13 @@ class SpotifyOCPAudioService(AudioPlayerBackend):
         """
         getting the duration of the audio in milliseconds
         """
-        # we only can estimate how much we already played as a minimum value
-        return self.get_track_position()
+        return self.hooks.get_track_length()
 
     def get_track_position(self) -> int:
         """
         get current position in milliseconds
         """
-        # approximate given timestamp of playback start
-        if self.ts:
-            return int((time.time() - self.ts) * 1000)
-        return 0
+        return self.hooks.get_track_position()
 
     def set_track_position(self, milliseconds):
         """
