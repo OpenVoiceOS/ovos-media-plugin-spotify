@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.2.0a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.0a1) (2024-09-10)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/V0.1.0a8...0.2.0a1)
+
+**Fixed bugs:**
+
+- fix/stop [\#10](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/10) ([JarbasAl](https://github.com/JarbasAl))
+
+**Merged pull requests:**
+
+- feat:spotifyd\_integration [\#13](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/13) ([JarbasAl](https://github.com/JarbasAl))
+
+## [V0.1.0a8](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/V0.1.0a8) (2024-07-05)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/V0.1.0a7...V0.1.0a8)
+
 ## [V0.1.0a7](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/V0.1.0a7) (2024-07-05)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/V0.1.0a6...V0.1.0a7)
