@@ -7,7 +7,6 @@ BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 def get_version():
     """ Find the version of the package"""
-    version = None
     version_file = os.path.join(BASEDIR, 'ovos_media_plugin_spotify', 'version.py')
     major, minor, build, alpha = (None, None, None, None)
     with open(version_file) as f:
@@ -52,10 +51,16 @@ def required(requirements_file):
 PLUGIN_ENTRY_POINT = 'ovos-media-audio-plugin-spotify=ovos_media_plugin_spotify:SpotifyOCPAudioService'
 OLD_PLUGIN_ENTRY_POINT = 'ovos_spotify=ovos_media_plugin_spotify.audio'
 
+
+with open(os.path.join(BASEDIR, "README.md"), "r") as f:
+    long_description = f.read()
+
 setup(
     name='ovos-media-plugin-spotify',
     version=get_version(),
     description='spotify plugin for ovos',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url='https://github.com/OpenVoiceOS/ovos-media-plugin-spotify',
     author='JarbasAi',
     author_email='jarbasai@mailfence.com',
