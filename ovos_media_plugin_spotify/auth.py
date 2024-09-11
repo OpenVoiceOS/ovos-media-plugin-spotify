@@ -39,7 +39,6 @@ def main():
                            client_secret=CLIENT_SECRET,
                            auth_endpoint="https://accounts.spotify.com/authorize?",
                            token_endpoint="https://accounts.spotify.com/api/token",
-                           refresh_endpoint="https://accounts.spotify.com/api/token",
                            callback_endpoint=f"http://0.0.0.0:{PORT}/auth/callback/{TOKEN_ID}",
                            scope=SCOPE)
 
