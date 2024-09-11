@@ -1,12 +1,16 @@
 # Changelog
 
-## [0.2.1a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.1a1) (2024-09-11)
+## [0.2.2a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.2a1) (2024-09-11)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.0...0.2.1a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.1...0.2.2a1)
+
+**Closed issues:**
+
+- Refresh\_endpoint error [\#17](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/issues/17)
 
 **Merged pull requests:**
 
-- feat:semver [\#15](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/15) ([JarbasAl](https://github.com/JarbasAl))
+- fix:compat\_latest\_backend\_client [\#18](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/18) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
