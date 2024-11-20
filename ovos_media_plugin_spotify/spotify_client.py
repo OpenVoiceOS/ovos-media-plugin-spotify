@@ -3,8 +3,7 @@ import time
 
 import requests
 import spotipy
-from ovos_backend_client.api import OAuthApi
-from ovos_backend_client.database import OAuthTokenDatabase, OAuthApplicationDatabase
+from ovos_utils.oauth import OAuthTokenDatabase, OAuthApplicationDatabase, get_oauth_token
 from ovos_utils import flatten_list
 from ovos_utils.log import LOG
 from ovos_utils.xdg_utils import xdg_config_home
@@ -40,8 +39,7 @@ class OVOSSpotifyCredentials(SpotifyAuthBase):
 
     @staticmethod
     def get_access_token():
-        t = OAuthApi().get_oauth_token(OAUTH_TOKEN_ID,
-                                       auto_refresh=True)
+        t = get_oauth_token(OAUTH_TOKEN_ID, auto_refresh=True)
         # TODO auto_refresh flag not working
         if OVOSSpotifyCredentials.is_token_expired(t):
             LOG.warning("SPOTIFY TOKEN EXPIRED")
