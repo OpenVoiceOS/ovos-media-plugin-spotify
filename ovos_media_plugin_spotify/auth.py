@@ -1,7 +1,7 @@
 import os
 from os.path import join
 
-from ovos_backend_client.database import OAuthTokenDatabase, OAuthApplicationDatabase
+from ovos_utils.oauth import OAuthTokenDatabase, OAuthApplicationDatabase
 from ovos_utils.xdg_utils import xdg_config_home
 from spotipy import SpotifyOAuth
 
