@@ -1,5 +1,5 @@
 """
-/home/ovos/.local/bin/spotifyd --device-type "speaker" --initial-volume 100 --on-song-change-hook "/home/ovos/.venvs/ovos/bin/python /home/ovos/spotify_events.py" --no-daemon
+/home/ovos/.local/bin/spotifyd --device-type "speaker" --initial-volume 100 --on-song-change-hook "/home/ovos/.venvs/ovos/bin/python /home/ovos/spotifyd_hooks.py" --no-daemon
 """
 import os
 import time
