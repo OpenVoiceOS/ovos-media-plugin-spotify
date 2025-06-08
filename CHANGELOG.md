@@ -1,13 +1,12 @@
 # Changelog
 
-## [0.2.4a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.4a1) (2024-11-20)
+## [0.2.5a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.5a1) (2025-06-08)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.3...0.2.4a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.4...0.2.5a1)
 
 **Merged pull requests:**
 
-- deprecate backend-client [\#23](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/23) ([JarbasAl](https://github.com/JarbasAl))
-- Update spotifyd\_hooks.py [\#22](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/22) ([timonvanhasselt](https://github.com/timonvanhasselt))
+- fix: compatibility with ovos-plugin-manager 1.X.X [\#27](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/27) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
