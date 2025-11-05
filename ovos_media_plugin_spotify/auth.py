@@ -13,7 +13,7 @@ def main():
 
         It requires the user to go to developer.spotify.com and set up a
         developer account, create an "Application" and make sure to whitelist
-        "https://localhost:8888".
+        "https://127.0.0.1:8888".
 
         After you have done that enter the information when prompted and follow
         the instructions given.
@@ -23,7 +23,7 @@ def main():
 
     CLIENT_ID = input('YOUR CLIENT ID: ')
     CLIENT_SECRET = input('YOUR CLIENT SECRET: ')
-    REDIRECT_URI = 'https://localhost:8888'
+    REDIRECT_URI = 'https://127.0.0.1:8888'
     TOKEN_ID = "ocp_spotify"
     PORT = 36536  # Oauth phal plugin
 
