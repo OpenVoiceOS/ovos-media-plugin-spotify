@@ -56,7 +56,7 @@ with open(os.path.join(BASEDIR, "README.md"), "r") as f:
     long_description = f.read()
 
 setup(
-    name='ovos-media-plugin-spotify',
+    name='ovos_media_plugin_spotify',
     version=get_version(),
     description='spotify plugin for ovos',
     long_description=long_description,
