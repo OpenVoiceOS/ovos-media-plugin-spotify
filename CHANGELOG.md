@@ -1,20 +1,12 @@
 # Changelog
 
-## [0.2.7a2](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.7a2) (2025-11-05)
+## [0.2.8a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a1) (2025-12-18)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.7a1...0.2.7a2)
-
-**Merged pull requests:**
-
-- localhost is no longer supported by spotify, needs to be ip address [\#30](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/30) ([reklis](https://github.com/reklis))
-
-## [0.2.7a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.7a1) (2025-11-05)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.6...0.2.7a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.7...0.2.8a1)
 
 **Merged pull requests:**
 
-- Update requirements.txt [\#31](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/31) ([JarbasAl](https://github.com/JarbasAl))
+- chore: Configure Renovate [\#34](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/34) ([renovate[bot]](https://github.com/apps/renovate))
 
 
 
