@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.8a3](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a3) (2025-12-19)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a2...0.2.8a3)
+
+**Merged pull requests:**
+
+- chore\(deps\): update actions/setup-python action to v6 [\#39](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/39) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.2.8a2](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a2) (2025-12-19)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a1...0.2.8a2)
