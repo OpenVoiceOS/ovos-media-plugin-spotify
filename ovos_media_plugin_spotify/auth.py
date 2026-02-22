@@ -43,7 +43,7 @@ def main():
                            scope=SCOPE)
 
     code = am.get_auth_response()
-    am.get_access_token(code, as_dict=False)
+    am.get_access_token(code, as_dict=False, check_cache=False)
     token_info = am.validate_token(am.cache_handler.get_cached_token())
 
     with OAuthTokenDatabase() as db:
