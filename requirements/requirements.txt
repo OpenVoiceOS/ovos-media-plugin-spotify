@@ -1,3 +1,0 @@
-spotipy
-ovos-plugin-manager>=0.0.26,<3.0.0
-ovos-utils>=0.5.0
