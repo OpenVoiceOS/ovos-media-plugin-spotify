@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.8a4](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a4) (2026-06-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a3...0.2.8a4)
+
+**Closed issues:**
+
+- Using 'localhost' as a redirect URI is being deprecated. [\#25](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/issues/25)
+- Warning: ovos\_plugin\_manager.audio has been deprecated on ovos-audio, move to ovos\_plugin\_manager.media [\#11](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/issues/11)
+
 ## [0.2.8a3](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a3) (2025-12-19)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a2...0.2.8a3)
