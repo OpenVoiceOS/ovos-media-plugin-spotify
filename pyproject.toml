@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ovos_media_plugin_spotify"
+dynamic = ["version"]
+description = "spotify plugin for ovos"
+readme = "README.md"
+license = "Apache-2.0"
+authors = [
+    { name = "JarbasAi", email = "jarbasai@mailfence.com" },
+]
+keywords = ["ovos", "audio", "video", "OCP", "plugin"]
+dependencies = [
+    "spotipy",
+    "ovos-plugin-manager>=0.0.26,<3.0.0",
+    "ovos-utils>=0.5.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/OpenVoiceOS/ovos-media-plugin-spotify"
+
+[project.entry-points."opm.media.audio"]
+ovos-media-audio-plugin-spotify = "ovos_media_plugin_spotify:SpotifyOCPAudioService"
+
+[project.entry-points."mycroft.plugin.audioservice"]
+ovos_spotify = "ovos_media_plugin_spotify.audio"
+
+[project.scripts]
+ovos-spotify-oauth = "ovos_media_plugin_spotify.auth:main"
+ovos-spotify-autoconfigure = "ovos_media_plugin_spotify.autoconfigure:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "ovos_media_plugin_spotify.version.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ovos_media_plugin_spotify*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.voc", "*.intent", "*.dialog", "locale/**/*"]

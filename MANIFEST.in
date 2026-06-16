@@ -1,4 +1,0 @@
-recursive-include ovos_audio_plugin_spotify/ *
-recursive-include requirements/ *
-include CHANGELOG.md
-include LICENSE
