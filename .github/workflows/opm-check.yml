@@ -12,7 +12,6 @@ jobs:
     with:
       python_version: '3.11'
       plugin_type: 'auto'
-      entry_point: 'ovos-media-plugin-spotify'
       opm_require_found: true
       opm_validate_interface: true
       opm_test_import: true
