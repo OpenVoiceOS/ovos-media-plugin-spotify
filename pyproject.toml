@@ -19,7 +19,10 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-test = ["pytest"]
+# end-to-end harness: drives the real backend through a real OCPMediaPlayer.
+# [media] (the OCPPlayerHarness) lands in ovoscope 0.20.x; floor-pin so pip
+# resolves it without --pre once published.
+test = ["pytest", "ovoscope[media]>=0.20.0a1"]
 
 [project.urls]
 Homepage = "https://github.com/OpenVoiceOS/ovos-media-plugin-spotify"
