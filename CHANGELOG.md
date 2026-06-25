@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.8a6](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a6) (2026-06-25)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a5...0.2.8a6)
+
+**Merged pull requests:**
+
+- test: end-to-end test via ovoscope OCPPlayerHarness [\#42](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/42) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.2.8a5](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a5) (2026-06-16)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a3...0.2.8a5)
