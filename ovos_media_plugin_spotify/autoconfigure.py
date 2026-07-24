@@ -1,6 +1,6 @@
 from pprint import pprint
 
-from ovos_config.config import MycroftUserConfig
+from ovos_config.config import UserConfig
 
 from ovos_media_plugin_spotify.spotify_client import SpotifyClient
 
@@ -13,7 +13,7 @@ def main():
         
         If you have not yet authenticated your spotify account, run 'ovos-spotify-oauth' first!
         """)
-    cfg = MycroftUserConfig()
+    cfg = UserConfig()
     spotify = SpotifyClient()
     devices = [d['name'] for d in spotify.devices]
     if not devices:
