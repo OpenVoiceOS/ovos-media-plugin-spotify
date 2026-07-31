@@ -1,10 +1,8 @@
 # ovos-media-plugin-spotify
 
-spotify plugin for [ovos-audio](https://github.com/OpenVoiceOS/ovos-audio) and [ovos-media](https://github.com/OpenVoiceOS/ovos-media)
+This is a Spotify plugin for [ovos-audio](https://github.com/OpenVoiceOS/ovos-audio) and [ovos-media](https://github.com/OpenVoiceOS/ovos-media). It lets OVOS start playback on Spotify.
 
-allows OVOS to initiate playback on spotify 
-
-> NOTE: [the companion skill](https://github.com/OpenVoiceOS/skill-ovos-spotify) is needed to integrate with voice search
+> NOTE: You also need [the companion skill](https://github.com/OpenVoiceOS/skill-ovos-spotify) to integrate with voice search.
 
 ## Install
 
@@ -12,9 +10,9 @@ allows OVOS to initiate playback on spotify
 
 ## Oauth
 
-Currently Oauth needs to be performed manually
+You must perform Oauth manually.
 
-after installing the plugin run `ovos-spotify-oauth` on the command line and follow the instructions
+After you install the plugin, run `ovos-spotify-oauth` on the command line and follow the instructions.
 
 ```
 $ ovos-spotify-oauth
@@ -37,11 +35,11 @@ ocp_spotify oauth token saved
 
 ## Configuration
 
-edit your mycroft.conf with any spotify players you want to expose
+Edit your `mycroft.conf` and add the Spotify players you want to expose.
 
-> NOTE: If you want to make the OVOS device itself a spotify player, we recommend [spotifyd](https://github.com/Spotifyd/spotifyd).
+> NOTE: If you want to make the OVOS device itself a Spotify player, use [spotifyd](https://github.com/Spotifyd/spotifyd).
 
-The easiest way is to use the provided `ovos-spotify-autoconfigure` command
+The easiest way to configure this is the `ovos-spotify-autoconfigure` command.
 
 ```bash
 $ ovos-spotify-autoconfigure
@@ -85,7 +83,7 @@ mycroft.conf updated!
 
 ### ovos-media
 
-> **WARNING**: `ovos-media' has not yet been released, WIP
+> **WARNING**: `ovos-media` has not been released yet. It is a work in progress.
 
 ```javascript
 {
@@ -110,7 +108,7 @@ mycroft.conf updated!
 
 ## Python usage
 
-if you don't want to use [the companion skill](https://github.com/OpenVoiceOS/skill-ovos-spotify), you can also write your own integrations
+If you do not want to use [the companion skill](https://github.com/OpenVoiceOS/skill-ovos-spotify), you can write your own integrations.
 
 ```python
 s = SpotifyClient()
@@ -140,3 +138,10 @@ time.sleep(5)
 
 print(audio.track_info())
 ```
+
+## Related projects
+
+- [ovos-audio](https://github.com/OpenVoiceOS/ovos-audio): the legacy audio service this plugin integrates with.
+- [ovos-media](https://github.com/OpenVoiceOS/ovos-media): the media service this plugin integrates with.
+- [skill-ovos-spotify](https://github.com/OpenVoiceOS/skill-ovos-spotify): the companion skill for voice search.
+- [spotifyd](https://github.com/Spotifyd/spotifyd): a Spotify client daemon you can run on the OVOS device itself.
