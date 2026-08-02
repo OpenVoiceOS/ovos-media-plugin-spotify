@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.8a8](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a8) (2026-08-02)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a7...0.2.8a8)
+
+**Merged pull requests:**
+
+- refactor: use the current ovos-config class names [\#44](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/44) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.2.8a7](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a7) (2026-07-31)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a6...0.2.8a7)
