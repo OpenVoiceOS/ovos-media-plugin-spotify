@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.9a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.9a1) (2026-08-13)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a8...0.2.9a1)
+
+**Merged pull requests:**
+
+- fix: consistent 127.0.0.1 OAuth redirect\_uri \(\#26\); stop\(\) always resets state \(\#14\) [\#48](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/48) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.2.8a8](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a8) (2026-08-02)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a7...0.2.8a8)
