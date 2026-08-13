@@ -80,7 +80,15 @@ class SpotifyOCPAudioService(AudioPlayerBackend):
 
     def stop(self):
         # there is no hard stop method
-        self.spotify.pause(self.device)
+        try:
+            self.spotify.pause(self.device)
+        except Exception as e:
+            # eg. NoSpotifyDevicesError when the target device isn't
+            # currently reported as active by spotify (already
+            # stopped/paused elsewhere). Regardless, always reset our own
+            # state below so OCP/OVOS don't consider us stuck "playing"
+            # forever (see issue #14 - "can't stop playing").
+            LOG.warning(f"failed to pause spotify device on stop: {e}")
         self.on_track_end()
 
     def pause(self):
