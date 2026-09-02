@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.10a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.10a1) (2026-09-02)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.9a1...0.2.10a1)
+
+**Merged pull requests:**
+
+- fix: report natural track end and honour the stop contract [\#50](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/50) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.2.9a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.9a1) (2026-08-13)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a8...0.2.9a1)
