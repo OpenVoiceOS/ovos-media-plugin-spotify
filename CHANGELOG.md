@@ -1,20 +1,76 @@
 # Changelog
 
-## [0.2.7a2](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.7a2) (2025-11-05)
+## [0.2.10a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.10a1) (2026-09-02)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.7a1...0.2.7a2)
-
-**Merged pull requests:**
-
-- localhost is no longer supported by spotify, needs to be ip address [\#30](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/30) ([reklis](https://github.com/reklis))
-
-## [0.2.7a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.7a1) (2025-11-05)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.6...0.2.7a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.9a1...0.2.10a1)
 
 **Merged pull requests:**
 
-- Update requirements.txt [\#31](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/31) ([JarbasAl](https://github.com/JarbasAl))
+- fix: report natural track end and honour the stop contract [\#50](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/50) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.2.9a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.9a1) (2026-08-13)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a8...0.2.9a1)
+
+**Merged pull requests:**
+
+- fix: consistent 127.0.0.1 OAuth redirect\_uri \(\#26\); stop\(\) always resets state \(\#14\) [\#48](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/48) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.2.8a8](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a8) (2026-08-02)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a7...0.2.8a8)
+
+**Merged pull requests:**
+
+- refactor: use the current ovos-config class names [\#44](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/44) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.2.8a7](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a7) (2026-07-31)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a6...0.2.8a7)
+
+**Merged pull requests:**
+
+- docs: rewrite README in Simplified Technical English [\#45](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/45) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.2.8a6](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a6) (2026-06-25)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a5...0.2.8a6)
+
+**Merged pull requests:**
+
+- test: end-to-end test via ovoscope OCPPlayerHarness [\#42](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/42) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.2.8a5](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a5) (2026-06-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a3...0.2.8a5)
+
+**Merged pull requests:**
+
+- chore: add missing shared CI workflows [\#40](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/40) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.2.8a3](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a3) (2025-12-19)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a2...0.2.8a3)
+
+**Merged pull requests:**
+
+- chore\(deps\): update actions/setup-python action to v6 [\#39](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/39) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [0.2.8a2](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a2) (2025-12-19)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.8a1...0.2.8a2)
+
+**Merged pull requests:**
+
+- chore\(deps\): update dependency python to 3.14 [\#35](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/35) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [0.2.8a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.8a1) (2025-12-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.7...0.2.8a1)
+
+**Merged pull requests:**
+
+- chore: Configure Renovate [\#34](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/34) ([renovate[bot]](https://github.com/apps/renovate))
 
 
 

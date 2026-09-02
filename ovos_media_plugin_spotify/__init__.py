@@ -51,6 +51,12 @@ class SpotifyOCPAudioService(AudioPlayerBackend):
         self._last_sync_ts = 0
         if self._track_start_callback:
             self._track_start_callback(None)
+        # called both on natural end-of-media (_wait_until_finished polls
+        # spotify and finds the device inactive) and on an explicit stop() -
+        # ocp_stop() is idempotent (no-ops once self._now_playing is None),
+        # so it is safe to call here unconditionally; this is the only path
+        # that reports a *natural* end-of-media upward
+        self.ocp_stop()
 
     def on_track_error(self, uri: str = ""):
         if not uri:
@@ -80,8 +86,19 @@ class SpotifyOCPAudioService(AudioPlayerBackend):
 
     def stop(self):
         # there is no hard stop method
-        self.spotify.pause(self.device)
+        stopped = True
+        try:
+            self.spotify.pause(self.device)
+        except Exception as e:
+            # eg. NoSpotifyDevicesError when the target device isn't
+            # currently reported as active by spotify (already
+            # stopped/paused elsewhere). Regardless, always reset our own
+            # state below so OCP/OVOS don't consider us stuck "playing"
+            # forever (see issue #14 - "can't stop playing").
+            LOG.warning(f"failed to pause spotify device on stop: {e}")
+            stopped = False
         self.on_track_end()
+        return stopped
 
     def pause(self):
         if self.spotify.is_playing(self.device):
