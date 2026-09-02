@@ -54,6 +54,7 @@ class TestStopAlwaysResetsState(unittest.TestCase):
                                        # spotifyd device not currently active
             svc.device_name = "OVOS"
             svc.hooks = MagicMock()
+            svc.bus = FakeBus()
             svc._track_start_callback = None
             svc._now_playing = "spotify:track:x"
             svc._last_sync_ts = 12345.0
