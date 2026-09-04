@@ -11,3 +11,8 @@ jobs:
       python_versions: '["3.10", "3.11", "3.12", "3.13", "3.14"]'
       install_extras: 'test'
       test_path: 'test'
+      # TEMPORARY until ovos-plugin-manager 3.0.0a1 ships on PyPI: pulls
+      # the MediaBackend v2 branch so PlaybackEvent/report are importable
+      # instead of the v1 OPM otherwise resolved from PyPI, which lacks
+      # them and dies on ImportError.
+      pre_install_pip: "git+https://github.com/OpenVoiceOS/ovos-plugin-manager@feat/media-backend-v2"
