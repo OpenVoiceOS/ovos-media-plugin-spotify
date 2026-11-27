@@ -84,10 +84,11 @@ class TestZeroBusStateEmission(unittest.TestCase):
         self._spotifyd("spotifyd.play")
         self.assertIn(PlaybackEvent.RESUMED, self._kinds())
 
+        reported = self._kinds()
         self.backend.stop()
-        self.assertNotIn(PlaybackEvent.STOPPED, self._kinds())
         self._spotifyd("spotifyd.stop")
-        self.assertIn(PlaybackEvent.STOPPED, self._kinds())
+        self.assertEqual(self._kinds(), reported)
+        self.assertIsNone(self.backend.get_track_position())
 
         self.assertEqual(self.bus_messages, [],
                           f"backend emitted ovos.common_play.* itself: "

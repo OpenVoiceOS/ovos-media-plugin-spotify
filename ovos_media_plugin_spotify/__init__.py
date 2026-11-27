@@ -31,6 +31,7 @@ class SpotifyOCPAudioService(RemoteAudioPlayerBackend):
         self.spotify = SpotifyClient()
         self._paused = False
         self._last_sync_ts = 0
+        self._poll_id = 0  # a poll thread runs while its id is current
         self.device_name = self.config.get("identifier")  # device name in spotify
         self.hooks = SpotifydEvents(bus=self.bus,
                                    track_start_callback=self.on_track_start,
@@ -85,11 +86,13 @@ class SpotifyOCPAudioService(RemoteAudioPlayerBackend):
         """Report the end of *uri*, or of the current track.
 
         spotifyd's "stop" and "end_of_track" and the inactivity poll all
-        land here. ``report_track_end`` picks STOPPED or END_OF_MEDIA from
-        the ``_stop_requested`` flag that ``stop()`` sets. An end of a
-        replaced track keeps the state of the track that replaced it.
+        land here. An end of a replaced track keeps the state of the track
+        that replaced it. An end after ``stop()`` has no track and reports
+        nothing: ovos-media reports the stop itself.
         """
         ended_uri = uri or self._now_playing
+        if ended_uri is None:
+            return
         if ended_uri == self._now_playing:
             self.hooks.reset_metadata()
             self._paused = False
@@ -121,36 +124,43 @@ class SpotifyOCPAudioService(RemoteAudioPlayerBackend):
             self.on_track_error(uri)
             return
         # ovos-media calls play() on its dispatcher; it must not block
-        threading.Thread(target=self._wait_until_finished, args=(uri,),
-                         daemon=True).start()
+        self._poll_id += 1
+        threading.Thread(target=self._wait_until_finished,
+                         args=(uri, self._poll_id), daemon=True).start()
 
-    def _wait_until_finished(self, uri: str):
+    def _polling(self, uri: str, poll_id: int) -> bool:
+        return (poll_id == self._poll_id and self._last_sync_ts > 0
+                and self._now_playing == uri)
+
+    def _wait_until_finished(self, uri: str, poll_id: int):
         # poll spotify to see when the player becomes inactive
-        while self._last_sync_ts > 0 and self._now_playing == uri:
+        while self._polling(uri, poll_id):
             time.sleep(self.poll_interval)
+            if not self._polling(uri, poll_id):
+                return
             for d in self.spotify.devices:
                 if d["name"] == self.device_name and not d["is_active"]:
                     self.on_track_end(uri)
                     return
 
     def _stop(self) -> bool:
-        # there is no hard stop method - we can only ask spotify to pause.
-        # This is a pure ask: it reports nothing itself. The base class's
-        # stop() has already flagged _stop_requested before calling us, so
-        # whichever end-of-track callback eventually fires (spotifyd's own
-        # "stop"/"end_of_track" hook, or _wait_until_finished's inactivity
-        # poll) reports STOPPED via report_track_end/on_track_end - the
-        # single call site for that.
+        # There is no hard stop: ask spotify to pause. spotifyd answers
+        # with "pause", not "stop", so no end callback follows. Clear the
+        # track state here, which also ends the poll thread.
         try:
             self.spotify.pause(self.device)
         except Exception as e:
-            # eg. NoSpotifyDevicesError when the target device isn't
-            # currently reported as active by spotify (already
-            # stopped/paused elsewhere) - see issue #14 ("can't stop
-            # playing"). Report False; our own state resets once the
-            # end-of-track callback fires, same as a successful pause.
+            # eg. NoSpotifyDevicesError when the device is not active,
+            # see issue #14 ("can't stop playing")
             LOG.warning(f"failed to pause spotify device on stop: {e}")
             return False
+        finally:
+            self._poll_id += 1
+            self.hooks.reset_metadata()
+            self._paused = False
+            self._last_sync_ts = 0
+            self._now_playing = None
+            self._stop_requested = False
         return True
 
     def pause(self):

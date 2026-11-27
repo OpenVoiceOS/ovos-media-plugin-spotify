@@ -127,6 +127,59 @@ class TestThroughAudioService(unittest.TestCase):
         self.assertEqual(self.backend.get_track_length(), 1000)
 
 
+class TestPollThread(unittest.TestCase):
+    setUp = TestThroughAudioService.setUp
+    tearDown = TestThroughAudioService.tearDown
+    _set_active = TestThroughAudioService._set_active
+    _ends = TestThroughAudioService._ends
+
+    def _pollers(self):
+        return [t for t in threading.enumerate()
+                if getattr(t, "_target", None) == self.backend._wait_until_finished]
+
+    def _pause_event(self):
+        self.bus.emit(Message("spotifyd.pause", {"track_id": "aaa",
+                                                 "duration": 1000,
+                                                 "position": 500}))
+
+    def _stop(self):
+        self.svc.play_start_time -= 2  # past the 1 s start guard
+        self.svc.stop()
+        self._pause_event()  # spotifyd answers a pause, not a stop
+
+    def test_stop_ends_the_poll(self):
+        self.svc.play(A)
+        self.assertEqual(len(self._pollers()), 1)
+        self._stop()
+        self.assertTrue(_wait(lambda: not self._pollers()))
+        self.assertIsNone(self.backend.get_track_length())
+        self.assertIsNone(self.backend.get_track_position())
+        self.assertFalse(self.backend._stop_requested)
+
+    def test_replay_after_stop_keeps_one_poll(self):
+        for _ in range(10):
+            self.svc.play(A)
+            self._stop()
+        self.svc.play(A)
+        time.sleep(self.backend.poll_interval * 3)
+        self.assertLessEqual(len(self._pollers()), 1)
+        before = self._ends()
+        self._set_active(False)
+        self.assertTrue(_wait(lambda: not self._pollers()))
+        time.sleep(0.1)
+        self.assertEqual(self._ends() - before, 1)
+
+    def test_end_of_track_then_inactive_reports_one_end(self):
+        self.backend.poll_interval = 0.2
+        self.svc.play(A)
+        time.sleep(0.05)  # the poll thread sleeps
+        self.bus.emit(Message("spotifyd.end_of_track", {}))
+        self._set_active(False)
+        self.assertTrue(_wait(lambda: not self._pollers()))
+        time.sleep(0.1)
+        self.assertEqual(self._ends(), 1)
+
+
 class TestTrackTimes(unittest.TestCase):
     def setUp(self):
         with patch.object(ovos_media_plugin_spotify, "SpotifyClient"):

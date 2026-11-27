@@ -34,6 +34,7 @@ def _service():
         svc._now_playing = "spotify:track:x"
         svc._last_sync_ts = 12345.0
         svc._paused = False
+        svc._poll_id = 0
     svc.bind_event_reporter(lambda event, **data: events.append((event, data)))
     return svc, events
 
@@ -71,38 +72,26 @@ class TestNaturalEndOfMedia(unittest.TestCase):
         svc, _ = _service()
         self.assertIs(svc.stop(), True)
 
-    def test_stop_then_end_callback_reports_stopped_not_end_of_media(self):
-        """stop() itself (-> _stop()) is a pure ask and reports nothing;
-        the STOPPED report only happens once the end-of-track callback
-        fires, exactly like a natural end would - the only difference is
-        which PlaybackEvent report_track_end resolves to, based on the
-        _stop_requested flag stop() set."""
+    def test_stop_clears_the_track_and_reports_nothing(self):
+        """_stop() is a pure ask. It clears the track, so a late end
+        callback reports nothing: ovos-media reports the stop itself."""
         svc, events = _service()
 
         svc.stop()
-        self.assertEqual(events, [],
-                          f"_stop() must be a pure ask and report nothing; saw: {events}")
-
         svc.on_track_end()
+        self.assertEqual(events, [])
+        self.assertIsNone(svc._now_playing)
+        self.assertFalse(svc._stop_requested)
 
-        kinds = [e[0] for e in events]
-        self.assertIn(PlaybackEvent.STOPPED, kinds)
-        self.assertNotIn(PlaybackEvent.END_OF_MEDIA, kinds)
-
-    def test_stop_requested_flag_cleared_after_report(self):
+    def test_natural_end_after_stop_reports_end_of_media(self):
         svc, _ = _service()
 
         svc.stop()
-        svc.on_track_end()
-        self.assertFalse(svc._stop_requested)
-
-        # a subsequent natural end (no stop() in between) must report
-        # END_OF_MEDIA again, not STOPPED
         svc._now_playing = "spotify:track:y"
         events2 = []
         svc.bind_event_reporter(lambda event, **data: events2.append((event, data)))
         svc.on_track_end()
-        self.assertIn(PlaybackEvent.END_OF_MEDIA, [e[0] for e in events2])
+        self.assertEqual([e[0] for e in events2], [PlaybackEvent.END_OF_MEDIA])
 
 
 if __name__ == "__main__":
