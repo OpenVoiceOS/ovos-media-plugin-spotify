@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.12a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.12a1) (2026-11-27)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.11a1...0.2.12a1)
+
+**Merged pull requests:**
+
+- fix: legacy next/previous/track\_info are no-ops without a Spotify connection [\#58](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/58) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.2.11a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.11a1) (2026-11-27)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.10a1...0.2.11a1)
