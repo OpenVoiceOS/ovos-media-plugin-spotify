@@ -7,7 +7,7 @@ discover and load the plugin.
 """
 from importlib.metadata import entry_points
 
-from ovos_plugin_manager.templates.media import AudioPlayerBackend
+from ovos_plugin_manager.templates.media import RemoteAudioPlayerBackend
 
 
 def test_class_is_exported_from_package_root():
@@ -16,10 +16,12 @@ def test_class_is_exported_from_package_root():
     assert hasattr(pkg, "SpotifyOCPAudioService")
 
 
-def test_plugin_implements_audio_player_backend():
+def test_plugin_implements_remote_audio_player_backend():
     from ovos_media_plugin_spotify import SpotifyOCPAudioService
 
-    assert issubclass(SpotifyOCPAudioService, AudioPlayerBackend)
+    assert issubclass(SpotifyOCPAudioService, RemoteAudioPlayerBackend)
+    # it drives a Spotify Connect device, not local playback
+    assert SpotifyOCPAudioService.is_remote is True
 
 
 def test_opm_entry_point_loads_to_the_plugin_class():

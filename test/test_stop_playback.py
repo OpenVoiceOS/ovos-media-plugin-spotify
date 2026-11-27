@@ -40,13 +40,15 @@ class TestValidateDeviceId(unittest.TestCase):
 
 
 class TestStopAlwaysResetsState(unittest.TestCase):
-    def test_stop_resets_state_even_if_pause_raises(self):
+    def test_stop_never_raises_even_if_pause_raises_and_resets_state(self):
+        """_stop() must not crash when spotify.pause() raises (issue #14),
+        and it resets the track state even then."""
         from ovos_media_plugin_spotify import SpotifyOCPAudioService
         from ovos_media_plugin_spotify.spotify_client import NoSpotifyDevicesError
         from ovos_utils.fakebus import FakeBus
 
         with patch("ovos_media_plugin_spotify.SpotifyClient"), \
-             patch("ovos_media_plugin_spotify.SpotifydHooks"):
+             patch("ovos_media_plugin_spotify.SpotifydEvents"):
             svc = SpotifyOCPAudioService.__new__(SpotifyOCPAudioService)
             svc.spotify = MagicMock()
             svc.spotify.pause.side_effect = NoSpotifyDevicesError()
@@ -55,16 +57,20 @@ class TestStopAlwaysResetsState(unittest.TestCase):
             svc.device_name = "OVOS"
             svc.hooks = MagicMock()
             svc.bus = FakeBus()
-            svc._track_start_callback = None
+            svc.meta = {}
+            svc._event_reporter = None
+            svc._stop_requested = False
             svc._now_playing = "spotify:track:x"
             svc._last_sync_ts = 12345.0
             svc._paused = True
+            svc._poll_id = 0
 
-            svc.stop()
+            # must not raise despite spotify.pause() failing
+            self.assertIs(svc.stop(), False)
 
-        # despite spotify.pause() raising, our own state must reset
         self.assertEqual(svc._last_sync_ts, 0)
         self.assertFalse(svc._paused)
+        self.assertIsNone(svc._now_playing)
 
 
 if __name__ == '__main__':

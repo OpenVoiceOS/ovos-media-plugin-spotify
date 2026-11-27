@@ -120,3 +120,69 @@ class SpotifydHooks:
                                       {"state": 2}))  # paused
         self.bus.emit(message.forward("ovos.common_play.media.state",
                                       {"state": 2}))  # loading media
+
+
+class SpotifydEvents(SpotifydHooks):
+    """spotifyd listener for the MediaBackend v2 class.
+
+    It emits no ``ovos.common_play.*`` messages: the backend reports each
+    callback as a ``PlaybackEvent`` and ovos-media emits the bus state.
+    The parent class keeps the legacy audio service behaviour.
+    """
+
+    def __init__(self, bus,
+                 track_start_callback=None,
+                 track_pause_callback=None,
+                 track_resume_callback=None,
+                 track_end_callback=None,
+                 track_error_callback=None):
+        self.track_pause_callback = track_pause_callback
+        self.track_resume_callback = track_resume_callback
+        super().__init__(bus, track_start_callback=track_start_callback,
+                         track_end_callback=track_end_callback,
+                         track_error_callback=track_error_callback)
+
+    def on_spotify_start(self, message: Message):
+        self._last_sync_ts = time.time()
+        self.current_uri = "spotify:track:" + message.data["track_id"]
+        self._track_pos = message.data["position"]  # milliseconds
+
+    def on_spotify_play(self, message: Message):
+        # spotifyd sends "play" for a new track and for a resume;
+        # only the track id tells them apart
+        new_uri = "spotify:track:" + message.data["track_id"]
+        is_resume = new_uri == self.current_uri
+        self._last_sync_ts = time.time()
+        self.current_uri = new_uri
+        self._track_len = message.data["duration"]  # milliseconds
+        self._track_pos = message.data["position"]  # milliseconds
+        if is_resume and self.track_resume_callback is not None:
+            self.track_resume_callback(new_uri)
+        elif not is_resume and self.track_start_callback is not None:
+            self.track_start_callback(new_uri)
+
+    def on_spotify_stop(self, message: Message):
+        stopped_uri = self.current_uri
+        self.reset_metadata()
+        if self.track_end_callback is not None:
+            self.track_end_callback(stopped_uri)
+
+    def on_spotify_pause(self, message: Message):
+        self.current_uri = "spotify:track:" + message.data["track_id"]
+        self._track_len = message.data["duration"]  # milliseconds
+        self._track_pos = message.data["position"]  # milliseconds
+        self._last_sync_ts = 0
+        if self.track_pause_callback is not None:
+            self.track_pause_callback(self.current_uri)
+
+    def on_spotify_end(self, message: Message):
+        self._track_pos = self._track_len
+        if self.track_end_callback is not None:
+            self.track_end_callback(self.current_uri)
+
+    def on_spotify_change(self, message: Message):
+        # a track started outside of us, eg. a skip in the Spotify app
+        self.current_uri = "spotify:track:" + message.data["track_id"]
+        self._last_sync_ts = time.time()
+        if self.track_start_callback is not None:
+            self.track_start_callback(self.current_uri)
