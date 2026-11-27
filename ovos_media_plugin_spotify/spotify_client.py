@@ -58,7 +58,7 @@ class OVOSSpotifyCredentials(SpotifyAuthBase):
         am = SpotifyOAuth(scope=SCOPE,
                           client_id=app["client_id"],
                           client_secret=app["client_secret"],
-                          redirect_uri='https://localhost:8888',
+                          redirect_uri='https://127.0.0.1:8888',
                           cache_path=f"{AUTH_DIR}/token",
                           open_browser=False)
 
@@ -147,6 +147,12 @@ class SpotifyClient:
         return self.__device_list
 
     def validate_device_id(self, dev_id):
+        if dev_id is None:
+            # eg. the target device (spotifyd) isn't currently reported as
+            # an active spotify device - it may have been stopped/paused
+            # from elsewhere. name/type matching below requires a string,
+            # so bail out cleanly instead of crashing with AttributeError.
+            raise NoSpotifyDevicesError
         found = False
         for d in self.devices:
             if d["id"] == dev_id:
