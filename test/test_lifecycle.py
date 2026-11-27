@@ -42,7 +42,7 @@ def _backend(bus):
         backend = SpotifyOCPAudioService({"identifier": DEVICE_NAME}, bus=bus)
     backend.spotify = client
     # avoid the blocking Connect-device poll
-    backend._wait_until_finished = lambda: None
+    backend._wait_until_finished = lambda uri: None
     return backend
 
 

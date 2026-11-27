@@ -14,19 +14,13 @@ authors = [
 keywords = ["ovos", "audio", "video", "OCP", "plugin"]
 dependencies = [
     "spotipy",
-    "ovos-config>=0.0.12,<3.0.0",
-    # MediaBackend v2 (PlaybackEvent/report, no plugin-side bus state
-    # emission) needs an OPM new enough to carry it; bump to
-    # >=3.0.0a1,<4.0.0 once v2 ships as 3.0.0
-    "ovos-plugin-manager>=2.11.6a1,<4.0.0",
+    "ovos-config>=0.0.12,<4.0.0",
+    "ovos-plugin-manager>=3.1.0a1,<4.0.0",
     "ovos-utils>=0.5.0,<1.0.0",
 ]
 
 [project.optional-dependencies]
-# end-to-end harness: drives the real backend through a real OCPMediaPlayer.
-# [media] (the OCPPlayerHarness) lands in ovoscope 0.20.x; floor-pin so pip
-# resolves it without --pre once published.
-test = ["pytest", "ovoscope[media]>=0.20.0a1"]
+test = ["pytest", "ovos-media>=3.0.0a1"]
 
 [project.urls]
 Homepage = "https://github.com/OpenVoiceOS/ovos-media-plugin-spotify"

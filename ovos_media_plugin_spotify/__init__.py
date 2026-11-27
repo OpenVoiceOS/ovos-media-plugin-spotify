@@ -1,10 +1,12 @@
+import threading
 import time
+from typing import Optional
 
 from ovos_plugin_manager.templates.media import PlaybackEvent, RemoteAudioPlayerBackend
 from ovos_utils.log import LOG
 
 from ovos_media_plugin_spotify.spotify_client import SpotifyClient
-from ovos_media_plugin_spotify.spotifyd import SpotifydHooks
+from ovos_media_plugin_spotify.spotifyd import SpotifydEvents
 
 
 class SpotifyOCPAudioService(RemoteAudioPlayerBackend):
@@ -21,6 +23,7 @@ class SpotifyOCPAudioService(RemoteAudioPlayerBackend):
 
     can_seek = False  # SpotifyClient/spotifyd never implemented seeking
     can_pause = True
+    poll_interval = 2  # seconds between device activity polls
 
     def __init__(self, config, bus=None):
         super().__init__(config, bus)
@@ -29,7 +32,7 @@ class SpotifyOCPAudioService(RemoteAudioPlayerBackend):
         self._paused = False
         self._last_sync_ts = 0
         self.device_name = self.config.get("identifier")  # device name in spotify
-        self.hooks = SpotifydHooks(bus=self.bus,
+        self.hooks = SpotifydEvents(bus=self.bus,
                                    track_start_callback=self.on_track_start,
                                    track_pause_callback=self.on_track_pause,
                                    track_resume_callback=self.on_track_resume,
@@ -79,53 +82,55 @@ class SpotifyOCPAudioService(RemoteAudioPlayerBackend):
             self.report(PlaybackEvent.RESUMED, uri=uri or self._now_playing)
 
     def on_track_end(self, uri: str = ""):
-        """The single end-of-track callback: reached from
-        ``_wait_until_finished``'s inactivity poll (natural end, no stop()
-        call from us) and from spotifyd's own "stop"/"end_of_track"
-        notifications (spotifyd's session ended, either because we asked
-        or because the track simply finished). ``report_track_end``
-        resolves STOPPED vs END_OF_MEDIA on its own via the base class's
-        ``_stop_requested`` flag, set by ``stop()`` - this is the only
-        ``report_track_end`` call site in this backend."""
-        if not uri:
-            self.hooks.reset_metadata()
+        """Report the end of *uri*, or of the current track.
+
+        spotifyd's "stop" and "end_of_track" and the inactivity poll all
+        land here. ``report_track_end`` picks STOPPED or END_OF_MEDIA from
+        the ``_stop_requested`` flag that ``stop()`` sets. An end of a
+        replaced track keeps the state of the track that replaced it.
+        """
         ended_uri = uri or self._now_playing
-        self._paused = False
-        self._last_sync_ts = 0
-        self._now_playing = None
+        if ended_uri == self._now_playing:
+            self.hooks.reset_metadata()
+            self._paused = False
+            self._last_sync_ts = 0
+            self._now_playing = None
         self.report_track_end(uri=ended_uri)
 
     def on_track_error(self, uri: str = ""):
-        """``spotify.play()`` (the ask) itself raised - nothing was ever
-        confirmed playing, so this is a plain ask failure, not an
-        end-of-track callback: report ERROR directly instead of going
-        through ``report_track_end``."""
-        if not uri:
-            self.hooks.reset_metadata()
+        """``spotify.play()`` raised: nothing played, so report ERROR."""
         errored_uri = uri or self._now_playing
-        self._paused = False
-        self._last_sync_ts = 0
-        self._now_playing = None
+        if errored_uri == self._now_playing:
+            self.hooks.reset_metadata()
+            self._paused = False
+            self._last_sync_ts = 0
+            self._now_playing = None
         self.report(PlaybackEvent.ERROR, uri=errored_uri,
                     error="spotify playback error")
 
     def play(self):
-        self.hooks.preload_uri(self._now_playing)
+        uri = self._now_playing
+        if not uri:
+            LOG.warning("play() called with no track loaded")
+            return
+        self.hooks.preload_uri(uri)
         self.on_track_start()
         try:
-            self.spotify.play([self._now_playing],
-                              dev_id=self.device)
-            self._wait_until_finished()
+            self.spotify.play([uri], dev_id=self.device)
         except Exception:
-            self.on_track_error()
+            self.on_track_error(uri)
+            return
+        # ovos-media calls play() on its dispatcher; it must not block
+        threading.Thread(target=self._wait_until_finished, args=(uri,),
+                         daemon=True).start()
 
-    def _wait_until_finished(self):
-        # pool spotify to see when the player becomes inactive
-        while self._last_sync_ts > 0:
-            time.sleep(2)
+    def _wait_until_finished(self, uri: str):
+        # poll spotify to see when the player becomes inactive
+        while self._last_sync_ts > 0 and self._now_playing == uri:
+            time.sleep(self.poll_interval)
             for d in self.spotify.devices:
                 if d["name"] == self.device_name and not d["is_active"]:
-                    self.on_track_end()
+                    self.on_track_end(uri)
                     return
 
     def _stop(self) -> bool:
@@ -174,17 +179,22 @@ class SpotifyOCPAudioService(RemoteAudioPlayerBackend):
         """ Extract info of current track. """
         return self.spotify.track_info()
 
-    def get_track_length(self) -> int:
-        """
-        getting the duration of the audio in milliseconds
-        """
-        return self.hooks.get_track_length()
+    def get_track_length(self) -> Optional[int]:
+        """Duration in milliseconds, None if nothing plays, -1 if unknown."""
+        if self._now_playing is None:
+            return None
+        return self.hooks._track_len or -1
 
-    def get_track_position(self) -> int:
-        """
-        get current position in milliseconds
-        """
-        return self.hooks.get_track_position()
+    def get_track_position(self) -> Optional[int]:
+        """Position in milliseconds, None if nothing plays."""
+        if self._now_playing is None:
+            return None
+        pos = self.hooks._track_pos or 0
+        if self.hooks._last_sync_ts:
+            pos += (time.time() - self.hooks._last_sync_ts) * 1000
+        if self.hooks._track_len:
+            pos = min(pos, self.hooks._track_len)
+        return int(pos)
 
 
 if __name__ == "__main__":

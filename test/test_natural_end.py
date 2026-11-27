@@ -22,7 +22,7 @@ def _service():
     events = []
 
     with patch("ovos_media_plugin_spotify.SpotifyClient"), \
-         patch("ovos_media_plugin_spotify.SpotifydHooks"):
+         patch("ovos_media_plugin_spotify.SpotifydEvents"):
         svc = SpotifyOCPAudioService.__new__(SpotifyOCPAudioService)
         svc.spotify = MagicMock()
         svc.device_name = "OVOS"

@@ -54,7 +54,7 @@ class TestStopAlwaysResetsState(unittest.TestCase):
         from ovos_utils.fakebus import FakeBus
 
         with patch("ovos_media_plugin_spotify.SpotifyClient"), \
-             patch("ovos_media_plugin_spotify.SpotifydHooks"):
+             patch("ovos_media_plugin_spotify.SpotifydEvents"):
             svc = SpotifyOCPAudioService.__new__(SpotifyOCPAudioService)
             svc.spotify = MagicMock()
             svc.spotify.pause.side_effect = NoSpotifyDevicesError()
