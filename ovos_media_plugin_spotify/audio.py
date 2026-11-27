@@ -17,6 +17,7 @@ class SpotifyAudioService(AudioBackend):
         self.spotify = SpotifyClient()
         self._paused = False
         self._last_sync_ts = 0
+        self._warned_no_connection = False
         self.device_name = self.config.get("identifier")  # device name in spotify
         self.hooks = SpotifydHooks(bus=self.bus,
                                    track_start_callback=self.on_track_start,
@@ -80,6 +81,11 @@ class SpotifyAudioService(AudioBackend):
                     return
 
     def stop(self):
+        if not self.spotify.spotify:
+            if not self._warned_no_connection:
+                LOG.warning("stop ignored: no Spotify connection")
+                self._warned_no_connection = True
+            return
         # there is no hard stop method
         if not self._paused:
             self.spotify.pause(self.device_name)
