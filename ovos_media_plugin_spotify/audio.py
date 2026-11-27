@@ -102,10 +102,12 @@ class SpotifyAudioService(AudioBackend):
             self.spotify.resume(self.device_name)
 
     def next(self):
-        self.spotify.next(self.device_name)
+        if self.spotify.spotify:
+            self.spotify.next(self.device_name)
 
     def previous(self):
-        self.spotify.previous(self.device_name)
+        if self.spotify.spotify:
+            self.spotify.previous(self.device_name)
 
     def lower_volume(self):
         if self.spotify.is_playing(self.device_name):
@@ -117,6 +119,8 @@ class SpotifyAudioService(AudioBackend):
 
     def track_info(self):
         """ Extract info of current track. """
+        if not self.spotify.spotify:
+            return {}
         return self.spotify.track_info()
 
     def get_track_length(self) -> int:
