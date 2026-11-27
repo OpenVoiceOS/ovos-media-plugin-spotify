@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.11a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.11a1) (2026-11-27)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.10a1...0.2.11a1)
+
+**Merged pull requests:**
+
+- fix: legacy stop\(\) is a no-op without a Spotify connection [\#55](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/55) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- fix: accept ovos-config 3.x [\#53](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/53) ([goldyfruit](https://github.com/goldyfruit))
+
 ## [0.2.10a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.10a1) (2026-09-02)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.9a1...0.2.10a1)
