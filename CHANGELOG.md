@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.0a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/1.0.0a1) (2026-11-27)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.12a1...1.0.0a1)
+
+**Breaking changes:**
+
+- feat!: port to MediaBackend v2 [\#52](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/pull/52) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.2.12a1](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/tree/0.2.12a1) (2026-11-27)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify/compare/0.2.11a1...0.2.12a1)
